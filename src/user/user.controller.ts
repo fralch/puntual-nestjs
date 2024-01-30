@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { User } from "@prisma/client";
 
@@ -13,7 +13,11 @@ export class UserController {
 
     @Get(":id")
     async getOne(@Param("id") id: string){
-        return this.userService.getOne(Number(id));
+        const rpt = await this.userService.getOne(Number(id));
+        console.log(rpt);
+        if (!rpt)  throw new BadRequestException("User not found");
+        
+        return rpt;
     }
 
     @Post()
@@ -28,6 +32,10 @@ export class UserController {
 
     @Delete()
     async deleteOne(id: number) {
-        return this.userService.deleteOne(id);
+        try {
+            return await this.userService.deleteOne(id);
+        } catch (error) {
+            throw new BadRequestException("User not found");
+        }
     }
 }
