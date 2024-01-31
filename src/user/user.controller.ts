@@ -2,7 +2,7 @@ import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put } 
 import { UserService } from "./user.service";
 import { Usuarios } from "@prisma/client";
 
-@Controller("Usuario")
+@Controller("Usuarios")
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
