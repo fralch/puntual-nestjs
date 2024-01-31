@@ -1,6 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// npx prisma migrate dev --name init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,19 +13,66 @@ datasource db {
 }
 
 
-model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  name     String?
-  password String
-  posts    Post[]
+model Usuarios {
+  id        Int      @id @default(autoincrement())
+  dni       Int   @unique
+  nombre    String
+  cargo     String
+  celular   Int
+  correo    String
+  direccion String
+  horarios_laborales Horarios_laborales[]
+  registro_asistencias Registro_asistencias[]
+  tardanzas Tardanzas[]
+  faltas Faltas[]
+  permisos_vacasiones Permisos_vacasiones[]
 }
 
-model Post {
+model Horarios_laborales {
   id        Int      @id @default(autoincrement())
-  title     String
-  content   String
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+  entrada_manana DateTime
+  salida_manana  DateTime
+  entrada_tarde  DateTime
+  salida_tarde   DateTime
+  usuario_id     Int
+  usuario        Usuarios @relation(fields: [usuario_id], references: [id])
 }
+
+model Registro_asistencias{
+  id        Int      @id @default(autoincrement())
+  fecha     DateTime
+  hora_entrada DateTime
+  hora_salida  DateTime
+  usuario_id     Int
+  turno    String
+  foto    String
+  horas_trabajadas Int
+  usuario        Usuarios @relation(fields: [usuario_id], references: [id])
+}
+
+model Tardanzas {
+  id        Int      @id @default(autoincrement())
+  fecha     DateTime
+  turno   String
+  minutos Int
+  usuario_id     Int
+  usuario        Usuarios @relation(fields: [usuario_id], references: [id])
+}
+
+model Faltas {
+  id        Int      @id @default(autoincrement())
+  fecha     DateTime
+  turno   String
+  usuario_id     Int
+  usuario        Usuarios @relation(fields: [usuario_id], references: [id])
+}
+
+model Permisos_vacasiones {
+  id        Int      @id @default(autoincrement())
+  fecha_inicio     DateTime
+  fecha_fin     DateTime
+  motivo  String
+  usuario_id     Int
+  usuario        Usuarios @relation(fields: [usuario_id], references: [id])
+}
+

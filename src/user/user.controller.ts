@@ -1,41 +1,39 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { UserService } from "./user.service";
-import { User } from "@prisma/client";
+import { Usuarios } from "@prisma/client";
 
-@Controller("user")
+@Controller("Usuario")
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Get()
-    async getAll() {
+    async getAll(): Promise<Usuarios[]> {
         return this.userService.getAll();
     }
 
     @Get(":id")
-    async getOne(@Param("id") id: string){
+    async getById(@Param("id") id: string): Promise<Usuarios> {
         const rpt = await this.userService.getOne(Number(id));
-        console.log(rpt);
-        if (!rpt)  throw new BadRequestException("User not found");
-        
+        if (!rpt) throw new BadRequestException("Usuario no encontrado");
         return rpt;
     }
 
     @Post()
-    async create(@Body() data: User) {
+    async create(@Body() data: Usuarios): Promise<Usuarios> {
         return this.userService.create(data);
     }
 
-    @Put()
-    async updateOne(@Body() data: User) {
-        return this.userService.updateOne(data.id, data);
+    @Put(":id")
+    async update(@Param("id") id: string, @Body() data: { name: string, email: string, password: string }): Promise<Usuarios> {
+        const rpt = await this.userService.updateOne(Number(id), data);
+        if (!rpt) throw new BadRequestException("Usuario no encontrado");
+        return rpt;
     }
 
-    @Delete()
-    async deleteOne(id: number) {
-        try {
-            return await this.userService.deleteOne(id);
-        } catch (error) {
-            throw new BadRequestException("User not found");
-        }
+    @Delete(":id")
+    async delete(@Param("id") id: string): Promise<Usuarios> {
+        const rpt = await this.userService.deleteOne(Number(id));
+        if (!rpt) throw new BadRequestException("Usuario no encontrado");
+        return rpt;
     }
 }
