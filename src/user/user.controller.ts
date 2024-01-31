@@ -20,6 +20,9 @@ export class UserController {
 
     @Post()
     async create(@Body() data: Usuarios): Promise<Usuarios> {
+        // verificar si el dni ya existe
+        const user = await this.userService.findByDNI(data.dni);
+        if (user) throw new BadRequestException("El usuario ya existe");
         return this.userService.create(data);
     }
 

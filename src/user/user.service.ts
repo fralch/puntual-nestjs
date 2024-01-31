@@ -25,4 +25,8 @@ export class UserService {
     async deleteOne(id: number) : Promise<Usuarios> {
         return this.prisma.usuarios.delete({ where: { id } });
     }
+
+    async findByDNI(dni: number) : Promise<Usuarios> {
+        return this.prisma.usuarios.findFirst({ where: { dni } });
+    }
 }
