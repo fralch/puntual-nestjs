@@ -15,10 +15,10 @@ CREATE TABLE `Usuarios` (
 -- CreateTable
 CREATE TABLE `Horarios_laborales` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `entrada_manana` DATETIME(3) NOT NULL,
-    `salida_manana` DATETIME(3) NOT NULL,
-    `entrada_tarde` DATETIME(3) NOT NULL,
-    `salida_tarde` DATETIME(3) NOT NULL,
+    `entrada_manana` VARCHAR(191) NOT NULL,
+    `salida_manana` VARCHAR(191) NOT NULL,
+    `entrada_tarde` VARCHAR(191) NOT NULL,
+    `salida_tarde` VARCHAR(191) NOT NULL,
     `usuario_id` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -27,9 +27,9 @@ CREATE TABLE `Horarios_laborales` (
 -- CreateTable
 CREATE TABLE `Registro_asistencias` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `fecha` DATETIME(3) NOT NULL,
-    `hora_entrada` DATETIME(3) NOT NULL,
-    `hora_salida` DATETIME(3) NOT NULL,
+    `fecha` VARCHAR(191) NOT NULL,
+    `hora_entrada` VARCHAR(191) NOT NULL,
+    `hora_salida` VARCHAR(191) NOT NULL,
     `usuario_id` INTEGER NOT NULL,
     `turno` VARCHAR(191) NOT NULL,
     `foto` VARCHAR(191) NOT NULL,

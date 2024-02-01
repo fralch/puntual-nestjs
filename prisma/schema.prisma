@@ -30,19 +30,19 @@ model Usuarios {
 
 model Horarios_laborales {
   id        Int      @id @default(autoincrement())
-  entrada_manana DateTime
-  salida_manana  DateTime
-  entrada_tarde  DateTime
-  salida_tarde   DateTime
+  entrada_manana String
+  salida_manana  String
+  entrada_tarde  String
+  salida_tarde   String
   usuario_id     Int
   usuario        Usuarios @relation(fields: [usuario_id], references: [id])
 }
 
 model Registro_asistencias{
   id        Int      @id @default(autoincrement())
-  fecha     DateTime
-  hora_entrada DateTime
-  hora_salida  DateTime
+  fecha     String
+  hora_entrada String
+  hora_salida  String
   usuario_id     Int
   turno    String
   foto    String

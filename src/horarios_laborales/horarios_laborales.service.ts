@@ -25,4 +25,8 @@ export class HorariosLaboralesService {
     async deleteOne(id: number) : Promise<Horarios_laborales> {
         return this.prisma.horarios_laborales.delete({ where: { id } });
     }
+
+    async findByUsuarioId(usuario_id: number) : Promise<Horarios_laborales[]> {
+        return this.prisma.horarios_laborales.findMany({ where: { usuario_id } });
+    }
 }
