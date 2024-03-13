@@ -27,6 +27,6 @@ export class UserService {
     }
 
     async findByDNI(dni: number) : Promise<Usuarios> {
-        return this.prisma.usuarios.findFirst({ where: { dni } });
+        return this.prisma.usuarios.findFirst({ where: { dni: Number(dni)} });
     }
 }
