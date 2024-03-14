@@ -13,11 +13,11 @@ export class HorariosLaboralesController {
          
     }
 
-    @Get(":id")
+    @Get(":id") // get by user id
     async getById(@Param("id") id: string): Promise<Horarios_laborales> {
-        const rpt = await this.horariosLaboralesSerices.getOne(Number(id));
-        if (!rpt) throw new BadRequestException("Horario no encontrado");
-        return rpt;
+        const rpt = await this.horariosLaboralesSerices.findByUsuarioId(Number(id));
+        if (rpt.length === 0) throw new BadRequestException("Horario no encontrado");
+        return rpt[0];
     }
 
     @Post()
