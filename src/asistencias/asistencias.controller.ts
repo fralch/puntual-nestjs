@@ -26,7 +26,7 @@ export class AsistenciasController {
     }
 
     @Post('/byDates')
-    async asistenciasByDates(@Body() data: { fecha_inicio: Date, fecha_fin: Date }): Promise<Registro_asistencias[]> {
+    async asistenciasByDates(@Body() data: { fecha_inicio: Date, fecha_fin: Date }) {
         return this.asistenciasService.asistencias_byDates(data.fecha_inicio, data.fecha_fin);
        
     }

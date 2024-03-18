@@ -20,13 +20,25 @@ export class AsistenciasService {
         });
     }
 
-    async asistencias_byDates(fecha_inicio: Date, fecha_fin: Date): Promise<Registro_asistencias[]> {
+    async asistencias_byDates(fecha_inicio: Date, fecha_fin: Date) {
         return this.prisma.registro_asistencias.findMany({
             where: {
                 fecha: {
                     gte: new Date(fecha_inicio),
                     lte: new Date(fecha_fin),
                 },
+            },
+            select: {
+                usuario_id: true,
+                usuario: {
+                    select: {
+                        nombre: true,
+                    },
+                },
+                fecha: true,
+                hora_entrada: true,
+                turno: true,
+                foto: true,
             },
         });
     }
