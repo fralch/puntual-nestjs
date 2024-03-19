@@ -8,13 +8,22 @@ export class TardanzasService {
   constructor(private prisma: PrismaService) {}
 
   async tardanzas(): Promise<Tardanzas[]> {
-    return this.prisma.tardanzas.findMany();
+    return this.prisma.tardanzas.findMany(
+      {
+        include: {
+          usuario: true,
+        },
+      }
+    );
   }
 
   async tardanzasByUserId(id: number): Promise<Tardanzas[]> {
     return this.prisma.tardanzas.findMany({
       where: {
         usuario_id: id,
+      },
+      include: {
+        usuario: true,
       },
     });
   }

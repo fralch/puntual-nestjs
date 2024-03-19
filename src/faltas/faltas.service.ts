@@ -12,11 +12,23 @@ export class FaltasService {
     }
 
     async getAll() : Promise<Faltas[]> {
-        return this.prisma.faltas.findMany();
+        return this.prisma.faltas.findMany(
+            {
+                include: {
+                    usuario: true
+                }
+            }
+        );
     }
 
     async getOneByUserId(id: number) : Promise<Faltas[]> {
-        return this.prisma.faltas.findMany({ where: { usuario_id: id } });
+        return this.prisma.faltas.findMany({ 
+            where: { usuario_id: id } ,
+            include: {
+                usuario: true
+            }
+
+        });
     }
 
     async updateOne(id: number, data: { fecha: Date, justificada: boolean }) : Promise<Faltas> {
