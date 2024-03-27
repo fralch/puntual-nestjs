@@ -24,6 +24,11 @@ export class TardanzasController {
         return this.tardanzasService.createTardanzas(data);
     }
 
+    @Post("/byDates")
+    async tardanzasByDates(@Body() data: { fecha_inicio: Date, fecha_fin: Date }){
+        return this.tardanzasService.tarnzasByDates(data.fecha_inicio, data.fecha_fin);
+    }
+
     @Put(":id")
     async update(@Param("id") id: string, @Body() data: Tardanzas): Promise<Tardanzas> {
         const rpt = await this.tardanzasService.updateTardanzas(Number(id), data);

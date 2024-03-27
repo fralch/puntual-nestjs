@@ -28,6 +28,27 @@ export class TardanzasService {
     });
   }
 
+  async tarnzasByDates(fecha_inicio: Date, fecha_fin: Date) {
+    return this.prisma.tardanzas.findMany({
+      where: {
+        fecha: {
+          gte: new Date(fecha_inicio),
+          lte: new Date(fecha_fin),
+        },
+      },
+      select: {
+        usuario_id: true,
+        usuario: {
+            select: {
+                nombre: true,
+            },
+        },
+        fecha: true,
+        turno: true,
+      },
+    });
+  }
+
   async createTardanzas(data: Tardanzas): Promise<Tardanzas> {
     return this.prisma.tardanzas.create({
       data,
