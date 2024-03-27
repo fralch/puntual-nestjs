@@ -24,6 +24,11 @@ export class FaltasController {
         return this.faltasService.create(data);
     }
 
+    @Post("/byDates")
+    async faltasByDates(@Body() data: { fecha_inicio: Date, fecha_fin: Date }){
+        return this.faltasService.faltas_byDates(data.fecha_inicio, data.fecha_fin);
+    }
+
     @Put(":id")
     async update(@Param("id") id: string, @Body() data: { fecha: Date, justificada: boolean }): Promise<Faltas> {
         const rpt = await this.faltasService.updateOne(Number(id), data);
