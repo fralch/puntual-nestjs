@@ -45,6 +45,7 @@ export class TardanzasService {
         },
         fecha: true,
         turno: true,
+        minutos: true,
       },
     });
   }
