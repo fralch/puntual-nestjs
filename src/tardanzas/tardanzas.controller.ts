@@ -29,6 +29,12 @@ export class TardanzasController {
         return this.tardanzasService.tarnzasByDates(data.fecha_inicio, data.fecha_fin);
     }
 
+    @Post("/countByDatesAndUserId")
+    async CountMinTardanzasByDatesAndUserId(@Body() data: { fecha_inicio: Date, fecha_fin: Date, id: number }) {
+        
+        return this.tardanzasService.CountMinTardanzasByDatesAndUserId(data.fecha_inicio, data.fecha_fin, data.id);
+    }
+
     @Put(":id")
     async update(@Param("id") id: string, @Body() data: Tardanzas): Promise<Tardanzas> {
         const rpt = await this.tardanzasService.updateTardanzas(Number(id), data);

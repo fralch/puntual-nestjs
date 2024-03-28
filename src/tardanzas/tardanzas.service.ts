@@ -49,6 +49,23 @@ export class TardanzasService {
       },
     });
   }
+  
+  async CountMinTardanzasByDatesAndUserId(fecha_inicio: Date, fecha_fin: Date, id: number) {
+    const min = await this.prisma.tardanzas.findMany({
+      where: {
+        usuario_id: id,
+        fecha: {
+          gte: new Date(fecha_inicio),
+          lte: new Date(fecha_fin),
+        },
+      },
+      select: {
+        minutos: true,
+      },
+    })
+    return min.reduce((x , y) => x + y.minutos, 0);
+  }
+
 
   async createTardanzas(data: Tardanzas): Promise<Tardanzas> {
     return this.prisma.tardanzas.create({
