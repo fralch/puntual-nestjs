@@ -13,6 +13,10 @@ export class UserService {
     async getAll() : Promise<Usuarios[]> {
         return this.prisma.usuarios.findMany();
     }
+    
+    async getDNI(dni: number) : Promise<Usuarios> {
+        return this.prisma.usuarios.findFirst({ where: { dni: dni } });
+    }
 
     async getOne(id: number) : Promise<Usuarios> {
         return this.prisma.usuarios.findUnique({ where: { id } });

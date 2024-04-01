@@ -18,6 +18,13 @@ export class UserController {
         return rpt;
     }
 
+    @Post("/dni")
+    async getByDNI(@Body() data: { dni: number }): Promise<Usuarios> {
+        const rpt = await this.userService.getDNI(data.dni);
+        if (!rpt) throw new BadRequestException("Usuario no encontrado");
+        return rpt;
+    }
+
     @Post()
     async create(@Body() data: Usuarios): Promise<Usuarios> {
         // verificar si el dni ya existe
