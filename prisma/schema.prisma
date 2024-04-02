@@ -19,8 +19,8 @@ model Usuarios {
   nombre    String
   cargo     String
   celular   Int
-  correo    String
-  direccion String
+  correo    String?
+  direccion String?
   horarios_laborales Horarios_laborales[]
   registro_asistencias Registro_asistencias[]
   tardanzas Tardanzas[]
@@ -41,12 +41,12 @@ model Horarios_laborales {
 model Registro_asistencias{
   id        Int      @id @default(autoincrement())
   fecha     DateTime
-  hora_entrada String
-  hora_salida  String
-  usuario_id     Int
+  hora_entrada String?
+  hora_salida  String?
+  usuario_id     Int 
   turno    String
-  foto    String
-  horas_trabajadas Int
+  foto    String?
+  horas_trabajadas Int?
   usuario        Usuarios @relation(fields: [usuario_id], references: [id])
 }
 

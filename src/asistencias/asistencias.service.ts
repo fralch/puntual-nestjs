@@ -43,10 +43,21 @@ export class AsistenciasService {
         });
     }
 
-    async asistencias_create(data: Registro_asistencias): Promise<Registro_asistencias> {
+    async asistencias_create(id: number, hora: string, turno: string, foto: string) {
+         const fecha = new Date();
+         
+
         return this.prisma.registro_asistencias.create({
-            data,
+        data: {
+            fecha: fecha,
+            hora_entrada: hora,
+            usuario_id: id,
+            turno: turno,
+            foto: foto,
+        },
         });
+
+      
     }
 
     async asistencias_update(id: number, data: Registro_asistencias): Promise<Registro_asistencias> {
