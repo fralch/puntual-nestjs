@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import fs from 'fs';
 import {Registro_asistencias} from '@prisma/client'
 
 @Injectable()
@@ -64,25 +63,31 @@ export class AsistenciasService {
         let dias = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         let fecha_dia = dias[fechaActual.getDay()];
          
+       
         // console.log(fechaActual);
         // console.log(fechaActualFormateada);
         // console.log(fechaCortaActual);
         // console.log(hora);
         // console.log(min);
-        // console.log(fecha_dia);
+        //console.log( fecha_dia);
 
-        const fotosave= foto.replace(/^data:image\/png;base64,/, "");
-        fs.writeFileSync(`./fotos/${id}-${fechaCortaActual}-${hora}-${min}.png`, fotosave, 'base64');
+        if(fecha_dia == 'Sunday'){
+            return {error: 'No se puede registrar asistencia los domingos'};
+        }else{
+            return this.prisma.registro_asistencias.create({
+                data: {
+                    fecha: fechaActual,
+                    hora_entrada: horaString,
+                    usuario_id: id,
+                    turno: turno,
+                    foto: foto,
+                },
+                });
+        }
 
-        return this.prisma.registro_asistencias.create({
-        data: {
-            fecha: fechaActual,
-            hora_entrada: horaString,
-            usuario_id: id,
-            turno: turno,
-            foto: foto,
-        },
-        });
+     
+
+        
 
       
     }

@@ -21,7 +21,7 @@ export class AsistenciasController {
     }
 
     @Post()
-    async create(@Body() data: Registro_asistencias): Promise<Registro_asistencias> {
+    async create(@Body() data: Registro_asistencias) {
         return this.asistenciasService.asistencias_create(
             data.usuario_id,
             data.hora_entrada,
