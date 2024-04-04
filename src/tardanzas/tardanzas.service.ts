@@ -67,7 +67,7 @@ export class TardanzasService {
   }
 
 
-  async createTardanzas(data: Tardanzas): Promise<Tardanzas> {
+  async createTardanzas(data: Tardanzas) {
     return this.prisma.tardanzas.create({
       data,
     });

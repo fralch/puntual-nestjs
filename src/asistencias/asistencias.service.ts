@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {Registro_asistencias} from '@prisma/client'
+import {Tardanzas} from '@prisma/client'
 
 @Injectable()
 
@@ -69,27 +70,50 @@ export class AsistenciasService {
         // console.log(fechaCortaActual);
         // console.log(hora);
         // console.log(min);
-        //console.log( fecha_dia);
+        // console.log( fecha_dia);
 
-        if(fecha_dia == 'Sunday'){
-            return {error: 'No se puede registrar asistencia los domingos'};
-        }else{
-            return this.prisma.registro_asistencias.create({
-                data: {
-                    fecha: fechaActual,
-                    hora_entrada: horaString,
-                    usuario_id: id,
-                    turno: turno,
-                    foto: foto,
-                },
-                });
+        const horario_ingreso_m = {
+            hora: 11,
+            min: 15,
         }
 
-     
+        const horario_ingreso_t = {
+            hora: 14,
+            min: 15,
+        }
 
         
 
-      
+        if(fecha_dia == 'Sunday'){
+            return {error: 'No se puede registrar asistencia los domingos'};
+        }
+        
+       if(turno == 'M' || turno == 'm'){
+        if(Number(hora) != horario_ingreso_m.hora ){
+            return {error: 'Estas fuera del horario de entrada'};
+        }
+        if(Number(min) > horario_ingreso_m.min){
+            await this.prisma.tardanzas.create({
+                            data: {
+                                fecha: fechaActual,
+                                turno: turno,
+                                minutos: Number(min) - horario_ingreso_m.min,
+                                usuario_id: id,
+
+                            },
+                        });
+        }
+       }
+           
+        return this.prisma.registro_asistencias.create({
+            data: {
+                fecha: fechaActual,
+                hora_entrada: hora.toString() + ':' + min.toString() + ':00',
+                usuario_id: id,
+                turno: turno,
+                foto: foto,
+            },
+        }); 
     }
 
     async asistencias_update(id: number, data: Registro_asistencias): Promise<Registro_asistencias> {
