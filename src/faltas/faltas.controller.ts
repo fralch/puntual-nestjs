@@ -20,7 +20,7 @@ export class FaltasController {
     }
 
     @Post()
-    async create(@Body() data: Faltas): Promise<Faltas> {
+    async create(@Body() data: Faltas){
         return this.faltasService.create(data);
     }
 

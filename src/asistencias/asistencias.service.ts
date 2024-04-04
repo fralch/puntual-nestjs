@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {Registro_asistencias} from '@prisma/client'
-import {Tardanzas} from '@prisma/client'
 
 @Injectable()
 
@@ -73,7 +72,7 @@ export class AsistenciasService {
         // console.log( fecha_dia);
 
         const horario_ingreso_m = {
-            hora: 11,
+            hora: 15,
             min: 15,
         }
 
