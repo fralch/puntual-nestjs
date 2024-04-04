@@ -27,13 +27,16 @@ export class FaltasService {
     }
 
     async getAll()  {
-        const faltas_all = await this.prisma.faltas.findMany(
-            {
-                include: {
-                    usuario: true
+        let hoy = new Date();
+        const faltas_all = await this.prisma.faltas.findMany({
+            where: {
+                fecha:  {
+                    gte: new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate(), 0, 0, 0),
+                    lte: new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate(), 23, 59, 59),
+                
                 }
             }
-        );
+        });
 
         if(faltas_all.length === 0) {
             const asistencia = await this.prisma.registro_asistencias.findMany();

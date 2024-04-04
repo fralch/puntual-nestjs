@@ -8,7 +8,7 @@ export class FaltasController {
     constructor(private readonly faltasService: FaltasService) {}
 
     @Get()
-    async faltas(): Promise<Faltas[]> {
+    async faltas() {
         return this.faltasService.getAll();
     }
 
