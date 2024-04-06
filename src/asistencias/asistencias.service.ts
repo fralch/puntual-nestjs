@@ -72,7 +72,7 @@ export class AsistenciasService {
         // console.log( fecha_dia);
 
         const horario_ingreso_m = {
-            hora: 11,
+            hora: 12,
             min: 15,
         }
 

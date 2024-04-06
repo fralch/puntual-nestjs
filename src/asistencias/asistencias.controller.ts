@@ -43,7 +43,8 @@ export class AsistenciasController {
     @UseInterceptors(FileInterceptor('foto', { storage }))
     async create(@UploadedFile() foto: Express.Multer.File, @Body() data: Omit<Registro_asistencias, 'foto'>) {
       // foto path widthout uploads
-      const fotoPath = foto.path.replace('uploads', '');
+      let fotoPath = foto.path.replace('uploads', '')
+      fotoPath = fotoPath.replace(/\\/g, '')
       return this.asistenciasService.asistencias_create(
         Number(data.usuario_id),
         data.turno,
