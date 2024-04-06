@@ -43,7 +43,7 @@ export class AsistenciasService {
         });
     }
 
-    async asistencias_create(id: number, horaString: string, turno: string, foto: string) {
+    async asistencias_create(id: number, turno: string, foto: string) {
         let fechaActual = new Date();
         fechaActual.setTime(fechaActual.getTime() - (5 * 60 * 60 * 1000));
         
@@ -72,7 +72,7 @@ export class AsistenciasService {
         // console.log( fecha_dia);
 
         const horario_ingreso_m = {
-            hora: 15,
+            hora: 11,
             min: 15,
         }
 

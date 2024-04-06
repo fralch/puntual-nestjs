@@ -1,6 +1,24 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { Express } from 'express';
 import { Registro_asistencias } from "@prisma/client";
 import { AsistenciasService } from "./asistencias.service";
+
+import { v4 as uuidv4 } from 'uuid';
+import * as path from 'path';
+import * as multer from 'multer';
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './uploads');
+    },
+    filename: (req, file, cb) => {
+      const ext = path.parse(file.originalname).ext;
+      const filename = `${uuidv4()}${ext}`;
+      cb(null, filename);
+    },
+  });
+  
 
 @Controller("Asistencias")
 
@@ -21,13 +39,14 @@ export class AsistenciasController {
     }
 
     @Post()
-    async create(@Body() data: Registro_asistencias) {
-        return this.asistenciasService.asistencias_create(
-            data.usuario_id,
-            data.hora_entrada,
-            data.turno,
-            data.foto
-        );
+    @UseInterceptors(FileInterceptor('foto', { storage }))
+    async create(@UploadedFile() foto: Express.Multer.File, @Body() data: Omit<Registro_asistencias, 'foto'>) {
+      const fotoPath = foto.path;
+      return this.asistenciasService.asistencias_create(
+        Number(data.usuario_id),
+        data.turno,
+        fotoPath
+      );
     }
 
     @Post('/byDates')
