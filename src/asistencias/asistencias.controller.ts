@@ -9,6 +9,7 @@ import * as path from 'path';
 import * as multer from 'multer';
 
 const storage = multer.diskStorage({
+    
     destination: (req, file, cb) => {
       cb(null, './uploads');
     },
@@ -41,7 +42,8 @@ export class AsistenciasController {
     @Post()
     @UseInterceptors(FileInterceptor('foto', { storage }))
     async create(@UploadedFile() foto: Express.Multer.File, @Body() data: Omit<Registro_asistencias, 'foto'>) {
-      const fotoPath = foto.path;
+      // foto path widthout uploads
+      const fotoPath = foto.path.replace('uploads', '');
       return this.asistenciasService.asistencias_create(
         Number(data.usuario_id),
         data.turno,

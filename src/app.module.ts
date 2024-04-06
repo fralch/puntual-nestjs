@@ -5,6 +5,8 @@ import { TardanzasModule } from './tardanzas/tardanzas.module';
 import { FaltasModule } from './faltas/faltas.module';
 import { AsistenciasModule } from './asistencias/asistencias.module';
 import {Permisos_vacacionesModule} from './permisos_vacaciones/permisos_vacaciones.module'
+import { StaticController } from './static.controller';
+
 
 @Module({
   imports: [UserModule, 
@@ -14,7 +16,7 @@ import {Permisos_vacacionesModule} from './permisos_vacaciones/permisos_vacacion
             Permisos_vacacionesModule, 
             AsistenciasModule
           ],
-  controllers: [],
+  controllers: [StaticController],
   providers: [],
 })
 export class AppModule {}
