@@ -7,7 +7,9 @@ import { join } from 'path';
 @Controller('uploads')
 export class StaticController {
     @Get()
-   
+    getFiles() {
+        return 'Hello from static controller';
+    }
     @Get(':filename')
     getFile(@Param('filename') filename: string, @Res() res: Response) {
       const filePath = join(process.cwd(), 'uploads', filename);
